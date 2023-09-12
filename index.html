@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+        <title>Thang Nguyen</title>
+        <meta charset="UTF-8">
+        <link rel ="stylesheet" type = "text/css" href = "style.css"> 
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+        <!-- <script src = "script.js"></script> -->
+
+      </head>
+    <body>
+        <h1>Released projects</h1>
+        <div>
+              <h2> Choose a project</h2>
+              <select id = "optionSelect" >
+                  <option value="option1">Option 1</option>
+                  <option value="option2">Option 2</option>
+                  <option value="option3">Option 3</option>
+                </select>
+                <label>
+                  <input type="checkbox" name="example-checkbox">
+                  Option 1
+                </label>
+                <label>
+                  <input type="checkbox" name="example-checkbox">
+                  Option 2
+                </label>
+                <button type="button" id="runButton" class = "button is-primary ">Run</button>
+
+
+        </div>
+       
+
+        <div id="imageDescriptionContainer" style="display: none;">
+            <img  class = "outcome" id="image" src="" alt="Selected Image">
+            <p  class ="project-detail" id="description"></p>
+          </div>
+        </body>
+
+<py-script>
+from pyodide import create_proxy
+
+
+def displayInfo(event):
+  selectedOption = document.getElementById("optionSelect").value
+  imageDescriptionContainer = document.getElementById("imageDescriptionContainer")
+  imageElement = document.getElementById("image")
+  descriptionElement = document.getElementById("description")
+  imagePath = ""
+  descriptionText = ""
+  console.log("option selected is:", selectedOption)
+  # Set image path and description based on the selected option
+  if(selectedOption == "option1"):
+    imagePath = "https://picsum.photos/400" # Replace with the actual image path for Option 1
+    descriptionText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  elif (selectedOption == "option2"):
+    imagePath = "https://picsum.photos/450" # Replace with the actual image path for Option 2
+    descriptionText = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software"
+    
+  elif (selectedOption == "option3"):
+    imagePath = "https://picsum.photos/500" # Replace with the actual image path for Option 3
+    descriptionText = " Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset "
+    
+  else:
+    imagePath = ""
+    descriptionText = ""
+  
+
+  # Display image and description if an option is selected
+  if(selectedOption != ""):
+    imageElement.src = imagePath
+    descriptionElement.textContent = descriptionText
+    imageDescriptionContainer.style.display = "block"
+  else :
+    imageDescriptionContainer.style.display = "none"
+  
+
+run = document.getElementById('runButton')
+print("the value will be changed")
+cc = create_proxy(displayInfo)
+run.addEventListener("click",cc)
+  
+
+</py-script>
+</html>
